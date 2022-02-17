@@ -12,7 +12,7 @@ class App extends Component {
             input: '',
         }
     }
-    onInputCHange = (event) => {
+    onInputChange = (event) => {
         console.log(event.target.value);
     }
     onButtonSubmit = () => {
@@ -25,7 +25,7 @@ class App extends Component {
                 <Logo />
                 <Rank />
                 <ImageLinkForm 
-                    onInputCHange={this.onInputCHange} 
+                    onInputChange={this.onInputChange} 
                     onButtonSubmit={this.onButtonSubmit}
                 />
                 {/*<FaceRecognition/>*/}

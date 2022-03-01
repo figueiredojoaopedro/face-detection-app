@@ -16,29 +16,15 @@ class App extends Component {
     constructor(){
         super();
         this.state = {
-            input: ''
+            input: '',
         }
     }
-    // as we are creating something that changes the dom, we've got to accept an event at the function
     onInputChange = (event) => {
         console.log(event.target.value);
     }
-    // to catch the detect click
     onButtonSubmit = () => {
-        setImageUrl(input)
-        app.models.predict(
-            Clarifai.FACE_DETECT_MODEL,
-        )
-        .then((response) => {
-            console.log(
-                response.outputs[0].data.regions[0].region_info.bounding_box
-            );
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        console.log('click');
     }
-
     render() {
         return (
             <div className="App">
@@ -46,8 +32,8 @@ class App extends Component {
                 <Logo />
                 <Rank />
                 <ImageLinkForm 
-                    onSubmit={this.onButtonSubmit} 
-                    onInputChange={this.onInputChange}   
+                    onInputChange={this.onInputChange} 
+                    onButtonSubmit={this.onButtonSubmit}
                 />
                 {/*<FaceRecognition/>*/}
             </div>

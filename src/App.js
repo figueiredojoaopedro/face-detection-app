@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Navigation from "./components/navigation/Navigation";
 import Logo from "./components/logo/Logo";
-import ImageLinkForm from "./components/imagelinkform/ImageLinkForm.js";
+import ImageLinkForm from "./components/imagelinkform/ImageLinkForm";
+import FaceRecognition from "./components/faceRecognition/FaceRecognition";
 import Rank from "./components/rank/Rank";
 import "./App.css";
 
@@ -10,32 +11,46 @@ import Clarifai from 'clarifai';
 
 // to access the api that im using...
 const app = new Clarifai.App({
-    apiKey: "36a126e3ad854417b93b7167e0384ab1",
+    apiKey: "f9a5ae86792c4500b4102fc12cbfc952",
 });
+
 class App extends Component {
     constructor(){
         super();
         this.state = {
             input: '',
+            imageUrl: '',
         }
     }
+    
     onInputChange = (event) => {
-        console.log(event.target.value);
+        this.setState({input: event.target.value});
     }
     onButtonSubmit = () => {
-        console.log('click');
+        this.setState({imageUrl: this.state.input})
+        app.models.predict(
+            Clarifai.FACE_DETECT_MODEL, 
+            this.state.input
+        )
+        .then(
+            response => console.log(response.outputs[0].data.regions[0].region_info.bounding_box)
+        ).catch(
+            err=> console.log(err)
+        );
     }
     render() {
         return (
             <div className="App">
-                <Navigation />
+                <Navigation /> 
                 <Logo />
                 <Rank />
                 <ImageLinkForm 
                     onInputChange={this.onInputChange} 
                     onButtonSubmit={this.onButtonSubmit}
                 />
-                {/*<FaceRecognition/>*/}
+                <FaceRecognition
+                    imageUrl={this.state.imageUrl}
+                />
             </div>
         );
     }

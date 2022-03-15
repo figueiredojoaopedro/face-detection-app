@@ -1,6 +1,6 @@
 .bounding-box{
     position: absolute;
-    box-shadow: 0 0 0 3px #149df2 inset;
+    box-shadow: 0 0 0 0.3 #157dbe inset;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -13,5 +13,5 @@
 }
 .output{
     top: 80%;
-    margin: 5rem;
+    margin-bottom: 5rem;
 }

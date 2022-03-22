@@ -26,8 +26,8 @@ class App extends Component {
         }
     }
 
-    onRouteChange = () => {
-        this.setState({route: 'home'});
+    onRouteChange = (route) => {
+        this.setState({route: route});
     }
 
     calculateFaceLocation = (data) => {
@@ -68,7 +68,7 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <Navigation /> 
+                <Navigation onRouteChage={this.onRouteChange}/> 
                 {
                 this.state.route === 'signin'
                     ? <SignIn onRouteChange={this.onRouteChange}/>

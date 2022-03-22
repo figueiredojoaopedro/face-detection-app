@@ -4,6 +4,7 @@ import Logo from "./components/logo/Logo";
 import ImageLinkForm from "./components/imagelinkform/ImageLinkForm";
 import FaceRecognition from "./components/faceRecognition/FaceRecognition";
 import SignIn from "./components/signin/SignIn";
+import Register from "./components/register/Register"
 import Rank from "./components/rank/Rank";
 import "./App.css";
 
@@ -23,10 +24,17 @@ class App extends Component {
             imageUrl: '',
             box: {},
             route: 'signin',
+            isSignedIn: false
         }
     }
 
     onRouteChange = (route) => {
+        if(route === 'signout'){
+            this.setState({isSignedIn: false})
+        }
+        else if(route === 'home'){
+            this.setState({isSignedIn: true})
+        }
         this.setState({route: route});
     }
 
@@ -68,11 +76,10 @@ class App extends Component {
     render() {
         return (
             <div className="App">
-                <Navigation onRouteChage={this.onRouteChange}/> 
+                <Navigation isSignedIn={this.state.isSignedIn} onRouteChage={this.onRouteChange}/> 
                 {
-                this.state.route === 'signin'
-                    ? <SignIn onRouteChange={this.onRouteChange}/>
-                    : 
+                this.state.route === 'home'
+                    ? 
                     <div>
                         <Logo />
                         <Rank />
@@ -85,6 +92,10 @@ class App extends Component {
                             imageUrl={this.state.imageUrl}
                         />
                     </div>
+                    : (this.state.route === 'signin'
+                        ? <SignIn onRouteChange={this.onRouteChange}/>
+                        : <Register onRouteChange={this.onRouteChange}/>
+                    )
                     }
             </div>
         );

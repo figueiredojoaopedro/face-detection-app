@@ -3,6 +3,7 @@ import Navigation from "./components/navigation/Navigation";
 import Logo from "./components/logo/Logo";
 import ImageLinkForm from "./components/imagelinkform/ImageLinkForm";
 import FaceRecognition from "./components/faceRecognition/FaceRecognition";
+import SignIn from "./components/signin/SignIn";
 import Rank from "./components/rank/Rank";
 import "./App.css";
 
@@ -21,8 +22,14 @@ class App extends Component {
             input: '',
             imageUrl: '',
             box: {},
+            route: 'signin',
         }
     }
+
+    onRouteChange = () => {
+        this.setState({route: 'home'});
+    }
+
     calculateFaceLocation = (data) => {
         const clarifai_face = data.outputs[0].data.regions[0].region_info.bounding_box;
         const image = document.getElementById('inputImage');
@@ -62,16 +69,23 @@ class App extends Component {
         return (
             <div className="App">
                 <Navigation /> 
-                <Logo />
-                <Rank />
-                <ImageLinkForm 
-                    onInputChange={this.onInputChange} 
-                    onButtonSubmit={this.onButtonSubmit}
-                />
-                <FaceRecognition
-                    box = {this.state.box}
-                    imageUrl={this.state.imageUrl}
-                />
+                {
+                this.state.route === 'signin'
+                    ? <SignIn onRouteChange={this.onRouteChange}/>
+                    : 
+                    <div>
+                        <Logo />
+                        <Rank />
+                        <ImageLinkForm 
+                            onInputChange={this.onInputChange} 
+                            onButtonSubmit={this.onButtonSubmit}
+                        />
+                        <FaceRecognition
+                            box = {this.state.box}
+                            imageUrl={this.state.imageUrl}
+                        />
+                    </div>
+                    }
             </div>
         );
     }
